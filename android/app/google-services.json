@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "895946352588",
+    "project_id": "villageissuetracker",
+    "storage_bucket": "villageissuetracker.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:895946352588:android:20e999a82ed8c522645f69",
+        "android_client_info": {
+          "package_name": "com.example.itemtracker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfREU-ioQlv1zSnhdo1YIzxUEgGfLhwkE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

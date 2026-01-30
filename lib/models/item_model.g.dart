@@ -19,17 +19,29 @@ class ItemModelAdapter extends TypeAdapter<ItemModel> {
     return ItemModel(
       name: fields[0] as String?,
       description: fields[1] as String?,
+      createdAt: fields[3] as DateTime?,
+      isSynced: fields[4] as bool?,
+      imgurl: fields[2] as String?,
+      id: fields[5] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, ItemModel obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
-      ..write(obj.description);
+      ..write(obj.description)
+      ..writeByte(2)
+      ..write(obj.imgurl)
+      ..writeByte(3)
+      ..write(obj.createdAt)
+      ..writeByte(4)
+      ..write(obj.isSynced)
+      ..writeByte(5)
+      ..write(obj.id);
   }
 
   @override

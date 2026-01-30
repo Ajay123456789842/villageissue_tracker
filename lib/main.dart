@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:itemtracker/models/item_model.dart';
@@ -5,16 +6,19 @@ import 'package:itemtracker/providers/item_provider.dart';
 import 'package:itemtracker/screens/Item_List.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:device_preview/device_preview.dart';
+import 'package:itemtracker/firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await Hive.initFlutter();
-
   Hive.registerAdapter(ItemModelAdapter());
-
   await Hive.openBox<ItemModel>('itembox');
 
-  runApp(MyApp());
+  runApp(ScreenUtilInit(
+      splitScreenMode: true, minTextAdapt: true, child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {

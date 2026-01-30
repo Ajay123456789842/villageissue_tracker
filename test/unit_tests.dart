@@ -1,4 +1,6 @@
 // test/item_provider_test.dart
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_test/hive_test.dart';
@@ -8,12 +10,26 @@ import 'package:itemtracker/providers/item_provider.dart';
 void main() {
   // Initialize Hive
   setUpAll(() async {
+    WidgetsFlutterBinding.ensureInitialized();
     await setUpTestHive(); // Sets up temporary Hive directory for tests
     Hive.registerAdapter(ItemModelAdapter());
   });
 
   tearDown(() async {
     await Hive.close(); // Clean up Hive after each test
+  });
+
+  testWidgets('Test ScreenUtil context', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      ScreenUtilInit(
+        designSize: Size(375, 812),
+        builder: (_, __) => MaterialApp(
+          home: Scaffold(body: Text("Hello")),
+        ),
+      ),
+    );
+
+    // Now you can safely use screen width, height, etc.
   });
 
   group('ItemProvider Hive Tests', () {
@@ -36,7 +52,7 @@ void main() {
           ItemModel(name: 'Initial Item', description: 'First description');
       await box.add(item);
 
-      itemProvider.updateitem(0,
+      itemProvider.updateitem(
           ItemModel(name: 'Updated Item', description: 'Updated description'));
 
       expect(box.getAt(0)?.name, 'Updated Item');

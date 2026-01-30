@@ -3,11 +3,11 @@ import 'package:hive/hive.dart';
 import 'package:itemtracker/models/item_model.dart';
 
 class ItemProvider extends ChangeNotifier {
-  var _items = [];
-  ThemeMode _themeMode = ThemeMode.light;
-  late Box itemsbox;
+  List<ItemModel> _items = [];
+  ThemeMode _themeMode = ThemeMode.dark;
+  late Box<ItemModel> _itemsbox;
 
-  List get items => _items;
+  List<ItemModel> get items => _items;
   ThemeMode get thememode => _themeMode;
 
   void toggletheme() {
@@ -20,33 +20,47 @@ class ItemProvider extends ChangeNotifier {
   }
 
   ItemProvider() {
-    getItems();
+    init();
+  }
+
+  Future<void> init() async {
+    _itemsbox = Hive.box<ItemModel>('itembox');
+    _getItems();
   }
 
 // ignore: non_constant_identifier_names
-  void getItems() async {
-    itemsbox = Hive.box<ItemModel>('itembox');
-    _items = itemsbox.values.toList();
+  void _getItems() async {
+    _items = _itemsbox.values.toList();
     print(_items.length);
     notifyListeners();
   }
 
   void addItem(ItemModel m) {
-    itemsbox.add(m);
-    _items = itemsbox.values.toList();
-    print(_items.length);
-    notifyListeners();
+    _itemsbox.put(m.id, m);
+    _getItems();
   }
 
-  void removeitem(int index) {
-    itemsbox.deleteAt(index);
-    _items = itemsbox.values.toList();
-    notifyListeners();
+  void removeitem(String id) {
+    _itemsbox.delete(id);
+    _getItems();
   }
 
-  void updateitem(int i, ItemModel m) {
-    itemsbox.putAt(i, m);
-    _items = itemsbox.values.toList();
-    notifyListeners();
+  void deleteallitems() {
+    _itemsbox.clear();
+    _getItems();
+  }
+
+  void updateitem(ItemModel m) {
+    _itemsbox.put(m.id, m);
+    _getItems();
+  }
+
+  List<ItemModel> get unsynceditems =>
+      _items.where((e) => e.isSynced == false).toList();
+
+  Future<void> markassynced(ItemModel item) async {
+    item.isSynced = true;
+    updateitem(item);
+    _getItems();
   }
 }
