@@ -1,16 +1,59 @@
-# itemtracker
+# 📱 Offline Village Issue & Item Tracker
 
-A new Flutter project.
+An **offline-first Flutter application** designed for rural and low-connectivity areas.  
+This app allows users to report village issues and track essential items even without internet access.  
+All data is stored locally and automatically synced with the government server once connectivity is restored.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+##  Features
 
-A few resources to get you started if this is your first Flutter project:
+### Issue Reporting (Offline)
+- Capture issue details:
+  - 🏘 Village Name
+  - 📍 Area Name
+  - 📝 Description
+  - ⚠ Priority Level
+  - 📅 Date
+  - 📷 Issue Image
+  - 🌍 GPS Coordinates
+- Works fully offline
+- Data stored securely in local database (Hive)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Item Tracking (Offline)
+- Add and manage essential village inventory
+- Track item quantities
+- Store stock updates locally
+- Ready for sync when internet returns
+
+---
+  Smart Sync System
+- Detects internet availability
+- Automatically syncs pending data with government server
+- Prevents duplicate submissions
+- Ensures reliable data delivery
+
+---
+
+### User Notification System
+- Notifies users when:
+  - Issue is successfully synced
+  - Issue status is updated
+  - Action is taken by authorities
+
+---
+
+## 🛠 Tech Stack
+
+- **Flutter**
+- **Hive (Local Database)**
+- **Geolocator (GPS Coordinates)**
+- **Image Picker (Issue Photos)**
+- **Connectivity Handling**
+- REST API integration (for sync)
+
+---
+
+## 🏗 Architecture
